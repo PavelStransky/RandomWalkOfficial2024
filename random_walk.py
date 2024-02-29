@@ -1,30 +1,27 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def random_walk_2d(num_steps=100, step_size=1, x0=0, y0=0):
+def random_walk_2d(num_steps=100, step_size=1, initial=np.array([0, 0])):
     " Generuje náhodnou procházku ve 2D "
-    x = x0
-    y = y0
-
-    xs = [x]
-    ys = [y]
+    position = initial
+    path = [position]
 
     for _ in range(num_steps):
-        phi = 2 * np.pi * np.random.random()
+        phi = np.random.uniform(0, 2 * np.pi)
         step_x = np.cos(phi)
         step_y = np.sin(phi)
 
-        x += step_x
-        y += step_y
+        phi = np.random.uniform(0, 2 * np.pi)
+        step = step_size * np.array([np.cos(phi), np.sin(phi)])
 
-        xs.append(x)
-        ys.append(y)
+        position = position + step
+        path.append(position)
 
-    return xs, ys
+    return np.array(path)
 
-xs, ys = random_walk_2d()
+path = random_walk_2d()
 
-plt.plot(xs, ys)
+plt.plot(path[:, 0], path[:, 1])
 plt.xlabel("x")
 plt.ylabel("y")
 plt.show()
